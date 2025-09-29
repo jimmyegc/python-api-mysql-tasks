@@ -1,12 +1,24 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy 
 from flask_marshmallow import Marshmallow
 
+# Cargar variables de .env
+load_dotenv()
+
 app = Flask(__name__)
 
-# 🔧 Conexión a MySQL (ajusta usuario/contraseña según tu caso)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/api_flask'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Construir la URL de conexión desde el .env
+db_user = os.getenv("DB_USER")
+db_password = os.getenv("DB_PASSWORD")
+db_host = os.getenv("DB_HOST")
+db_name = os.getenv("DB_NAME")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f"mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}"
+)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv("SQLALCHEMY_TRACK_MODIFICATIONS") == "True"
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)

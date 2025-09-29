@@ -1,0 +1,8 @@
+# 🔧 Conexión a MySQL
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_NAME=
+
+# Flask configs
+SQLALCHEMY_TRACK_MODIFICATIONS=False
